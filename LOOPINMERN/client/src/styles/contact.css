@@ -1,0 +1,16 @@
+.header-div{
+    margin: 2rem;
+    font-size: 1.25em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+.main-div{
+    margin: 2rem;
+    font-size: 1.25em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
+}
+.footer-div{
+    margin: 2rem;
+    font-size: 1.25em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
+}
