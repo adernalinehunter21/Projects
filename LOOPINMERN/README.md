@@ -1,6 +1,6 @@
-# Vote App
+# LoopIN App
 
-freeCodeCamp Build a Voting App created with the MERN stack
+ Build a LoopIn App created with the MERN stack
 
 ## User Stories
 
