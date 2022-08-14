@@ -1,0 +1,36 @@
+.text{
+    font-size: 12px;
+    font-family: "Nexa W01", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    color: rgb(87, 88, 89);
+}
+
+@media (max-width: 960px){
+    .text{
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 800px){
+    .text{
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 680px){
+    .text{
+        font-size: 6px;
+    }
+}
+
+@media (max-width: 500px){
+    .text{
+        font-size: 5px;
+    }
+}
+
+@media (max-width: 390px){
+    .text{
+        font-size: 4px;
+    }
+}

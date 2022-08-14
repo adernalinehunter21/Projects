@@ -1,0 +1,108 @@
+.searchdiv .search-advanced {
+    width: 780px;
+    height: 550px;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    position: absolute;
+    top: 38px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 1000;
+}
+
+#filter-heading{
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(87, 88, 89);
+}
+
+.search-section{
+    border-style: solid;
+    border-width: thin;
+    border-color: #ebe8e8;
+    font-size: 13px;
+    margin-bottom: 2px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.chkResource{
+    margin-left: 5px;
+    margin-top: 1px;
+}
+
+.searchInput{
+    border-style: solid;
+    border-width: thin;
+    border-color: gray;
+    width: 100%;
+}
+
+#searchbar:focus {
+    outline: none;
+}
+searchButton:active{
+    outline: none;
+    border: 0px;
+}
+
+.searchButton{
+    border: none;
+    outline: none;
+    height: 30px;
+    background-color:white;
+    margin-right:-2%;
+    color: gray;
+}
+
+.chklabel{
+    font-size:12.3px;
+}
+
+.chkbox{
+    width: 12px;
+    height: 12px;
+}
+
+.resource-group-heading{
+    margin-bottom: 0px;
+    border-bottom: none;
+    padding: 5px;
+}
+
+@media (min-width: 300px){
+    #searchbar{
+        width: 90%;
+    }   
+}
+
+@media (min-width: 576px){
+    #searchbar{
+        width: 80%;
+    }   
+}
+
+@media (min-width: 768px){
+    #searchbar{
+        width: 70%;
+    }   
+}
+
+@media (min-width: 992px){
+    #searchbar{
+        width: 85%;
+    }   
+}
+
+.resorce-header{
+    background: lightgrey;
+    padding: 5px;
+}
+
+.resorce-thumnail-or-icon{
+    margin: auto;
+}
+
+.resorce-icon{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

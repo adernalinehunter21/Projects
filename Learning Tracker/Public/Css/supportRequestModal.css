@@ -1,0 +1,46 @@
+.modal-content{
+    font-family: Nexa W01, Helvetica, Arial, sans-serif;
+}
+
+#Subject {
+    border-top: 0!important;
+    border-left: 0!important;
+    border-right: 0!important;
+    font-family: Nexa W01, Helvetica, Arial, sans-serif, FontAwesome;
+}
+
+#Subject {
+    color: #222;
+    background-color: white;
+    line-height: 0px;
+    margin: 0;
+    outline: none;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    border-radius: 0px;
+    border-color:  #ccc!important;
+    border-width: 1px;
+    display: inline;
+}
+
+#receipient-list{
+    color: #7c7d7d;;
+    background-color: white;
+    line-height: 30px;
+    margin: 0;
+    outline: none;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    border-radius: 0px;
+    border-color:  #ccc!important;
+    border-width: 1px;
+    border-top: 0!important;
+    border-left: 0!important;
+    border-right: 0!important;
+}
+
+.ql-editor{
+    padding: 5px;
+    margin: 0px;
+}

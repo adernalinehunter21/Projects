@@ -1,0 +1,110 @@
+.progress {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 10px;
+    overflow: hidden;
+    display: none;
+    
+}
+
+.bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 30px;
+    background: #60c8d7;
+}
+
+#assignment-file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#assignment-file-input + label {
+
+    display: inline-block;
+    background-color: #ECEDF0 !important;
+    color: #808080;
+    padding: 10px;
+    border-radius: 4px;;
+}
+
+#assignment-file-input:focus + label,
+#assignment-file-input + label:hover {
+    background-color: #d86f5f !important;
+    color: white;
+}
+
+#assignment-file-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+#internalFileName{
+    width: 100%;
+    padding: 5px;
+}
+
+#assignment-submit-button{
+    float: right;
+}
+
+.blick-element{
+   display: block; 
+}
+
+.wait-gif{
+    display: block;
+    text-align:center; 
+}
+
+#wait{
+    display: none;
+}
+
+#result{
+    display: block
+}
+
+.assignment-self-team{
+    background-color: #ECEDF0 !important;
+    color: #808080;
+    padding: 5px;
+    border-radius: 4px;
+    width:25%;
+    height:35px
+    }
+ 
+@media (min-width: 300px) {
+  .assignment-self-team {
+    width: 220px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 576px) {
+  .assignment-self-team {
+    width: 272px;
+  }
+}
+
+@media (min-width: 300px) {
+    .assignment-input-text{
+        width: 319px;
+        margin-top: 6px;
+    }
+}
+
+@media (min-width: 576px) {
+    .assignment-input-text{
+        width: 371px;
+        margin-top: 6px;
+    }
+}       
+

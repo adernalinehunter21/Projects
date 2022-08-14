@@ -1,0 +1,92 @@
+.body-background{
+    margin-top: 0px !important
+}
+@media (min-width: 992px) {
+  .navbar-fontsize {
+    font-size: 14px!important;
+  }
+}
+
+.zero-padding{
+  padding: 0px!important;
+
+}
+.white-background{
+  background-color: #fff!important;
+}
+
+.faci-prog {
+  margin-top: 25px!important;
+}
+
+
+#product {
+    border-left: 1px solid gray;
+    padding-left: 5px;
+}
+
+#coach {
+    border-left: 1px solid gray;
+    padding-left: 5px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/*Responsive*/
+
+@media screen and (max-width: 1050px){
+  .left-navItem{
+    position: absolute!important;
+    white-space: nowrap;
+    /*margin-right: 5%!important;*/
+  }
+  .maincontent{
+    /*margin-top: -10px !important;*/
+    position: relative!important;
+    top:-10px;
+    width: -webkit-fill-available!important;
+  }
+  .participantpromo{
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 765px){
+  .left-navItem{
+    display: block!important;
+    position: fixed!important;
+    z-index: 1;
+    white-space: nowrap;
+    overflow: visible!important;
+  }
+  .maincontent{
+    /*margin-top: -10px !important;*/
+    position: relative!important;
+    /*top:-10px;*/
+    width: -webkit-fill-available!important;
+  }
+  .participantpromo{
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 764px){
+  .myActivitiesDrop{
+    display: block!important;
+    text-decoration: none!important;  
+  }
+  .myActivitiesSimple{
+    display: none!important;
+  }
+  .reflectionCard{
+    max-height: 55px!important;
+  }
+}
+
+@media screen and (min-width: 765px){
+  .myActivitiesDrop{
+    display: none!important;
+  }
+}

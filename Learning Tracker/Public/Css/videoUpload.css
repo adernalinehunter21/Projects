@@ -1,0 +1,147 @@
+.progress {
+    position: relative;
+    height: 30px;
+    width: 100%;
+    border-radius: 6px;
+    padding: 10px;
+    overflow: hidden;
+    display: none;
+    
+}
+
+.bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 30px;
+    background: #60c8d7;
+}
+
+#video-file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#video-file-input + label {
+
+    display: inline-block;
+    background-color: #ECEDF0 !important;
+    color: #808080;
+    padding: 10px;
+    border-radius: 4px;;
+}
+
+#video-file-input:focus + label,
+#assignment-file-input + label:hover {
+    background-color: #d86f5f !important;
+    color: white;
+}
+
+#video-file-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+#internalFileName{
+    width: 100%;
+    padding: 5px;
+}
+
+#video-submit-button{
+    float: right;
+}
+
+.blick-element{
+   display: block; 
+}
+
+.wait-gif{
+    display: block;
+    text-align:center; 
+}
+
+#wait{
+    display: none;
+}
+
+#result{
+    display: block
+}
+
+#thumbnail-file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#thumbnail-file-input + label {
+
+    display: inline-block;
+    background-color: #ECEDF0 !important;
+    color: #808080;
+    padding: 10px;
+    border-radius: 4px;;
+}
+
+#thumbnail-file-input:focus + label,
+#thumbnail-file-input + label:hover {
+    background-color: #d86f5f !important;
+    color: white;
+}
+
+#thumbnail-file-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+#thumbnail-submit-button{
+    float: right;
+}
+
+#transcript-file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#transcript-file-input + label {
+
+    display: inline-block;
+    background-color: #ECEDF0 !important;
+    color: #808080;
+    padding: 10px;
+    border-radius: 4px;;
+}
+
+#transcript-file-input:focus + label,
+#transcript-file-input + label:hover {
+    background-color: #d86f5f !important;
+    color: white;
+}
+
+#transcript-file-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+#transcript-submit-button{
+    float: right;
+}
+
+.on-submission-tickmark{
+    color: #60c8d7;
+}
+
+.slider-switch-container{
+    display: inline;
+    padding-left: 10px;
+    position: relative;
+}

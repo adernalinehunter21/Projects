@@ -1,0 +1,68 @@
+/* input[type=radio] {
+    display:none;
+} */
+
+input#thing1[type=radio] + label
+{
+    background: url(../../images/ananth.jpg) center / contain no-repeat;
+    border-color: white;
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing2[type=radio] + label
+{
+    background: url(../../images/ananth.jpg) center / contain no-repeat;
+    border-color: white;
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing3[type=radio] + label
+{
+    background: url(../../images/ananth.jpg) center / contain no-repeat;
+    border-color: white;
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing4[type=radio] + label
+{
+    background: url(../../images/ananth.jpg) center / contain no-repeat;
+    border-color: white;
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing1[type=radio]:checked + label
+{
+    border-color: rgb(95, 199, 215);
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing2[type=radio]:checked + label
+{
+    border-color: rgb(95, 199, 215);
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing3[type=radio]:checked + label
+{
+    border-color: rgb(95, 199, 215);
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+input#thing4[type=radio]:checked + label
+{
+    border-color: rgb(95, 199, 215);
+    border-style: solid;
+    height: 100%;
+    width: 100%;
+}
+
+#height{
+    background-color: #F7F7F7;
+}
