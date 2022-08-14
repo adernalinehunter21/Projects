@@ -1,0 +1,157 @@
+{% extends 'FacilitatorBase.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="../../css/FacilitatorDashboard.css" />
+{% endblock %}
+{% block body %}
+
+<div class="setup-card-1" style="padding: 0px;">
+    <section class="main-div">
+        <h4 class="card-top-heading">Dashboard</h4>
+        {% if overviewCoursesFor30Days is not empty %}
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                <div class="col-lg-8 topHeading-col">
+                    <h5 class="heading-2">30 DAY OVERVIEW</h5>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row overview-row">
+            {% if overviewCoursesFor30Days is not empty %}
+            <div class="col-12 col-lg-8 prog-par-col">
+                <div class="card-group h-100">
+                    {% for course in overviewCoursesFor30Days %}
+                    <div class="card card-thumbnail">
+                        <div class="card-body card-thumbnail">
+                            <h5 class="card-title card-heading-dashboard"><i class="fas fa-chalkboard-teacher blue-icon"></i> Programs</h5>
+                            <h4 class="card-title">{{ course['totalNumberOfPrograms'] }}</h4>
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <div class="courceName-para">
+                                        {% set subjects = course['subjects'] %}
+                                        {% for subject in subjects %}
+                                            {{ subject['subject'] }}
+                                            <p class="product number" style="display: inline">{{ subject['programCount'] }}</p>
+                                            {% if not loop.last %}
+                                                <p id="product-2" class="product-item" style="display: inline;border-width: 1px;border-left-style: solid;">  </p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-thumbnail">
+                        <div class="card-body card-thumbnail">
+                            <h5 class="card-title card-heading-dashboard">
+                                <i class="fas fa-user-graduate blue-icon"></i> Participants
+                            </h5>
+                            <h4 class="card-title">{{ course['totalNumberOfParticipants'] }}</h4>
+                            <div class="row">
+                                <div class="col">
+                                   <div class="courceName-para">
+                                        {% set subjects = course['subjects'] %}
+                                        {% for subject in subjects %}
+                                            {{ subject['subject'] }}
+                                            <p class="product number" style="display: inline">{{ subject['participantCount'] }}</p>
+                                            {% if not loop.last %}
+                                                <p id="product-2" class="product-item" style="display: inline;border-width: 1px;border-left-style: solid;">  </p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if currentAndUpcomingPrograms is not empty %}
+            <div class="col-12 col-lg-4 current-prog-col">
+                <a href="#">
+                    <div class="card h-100">
+                        <div class="card-body current-prog-cardbody">
+                            <h4 class="card-title card-heading" style="color: #02435c;"><i class="fas fa-chalkboard-teacher"></i> Current &amp; Upcoming Programs</h4>
+                            <hr style="margin-top: 5px;" />
+                            <div class="current-prog-div">
+                                <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                    <div class="col zero-padding">
+                                        <div>
+                                            <div class="row" style="margin-right: 0px;margin-left: 0px;">
+                                                {% for currentAndUpcomingProgram in currentAndUpcomingPrograms %}
+                                                <div class="col-1" style="padding: 0px;"><img class="current-prog-img" src="{{ currentAndUpcomingProgram['logo'] }}" /></div>
+                                                <div class="col-11 current-prog-col2">
+                                                    <h6 class="text-muted current-prog-heading"> {{ currentAndUpcomingProgram['subject'] }} <br /></h6>
+                                                    <p class="current-prog-heading" style="margin-right: 0px;margin-top: -22px;padding-top: 10px;">{{ currentAndUpcomingProgram['startDate'] }} - {{ currentAndUpcomingProgram['endDate'] }}</p>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% if facilitatorSubjects is not empty %}
+    <section class="second-section main-div">
+        <div class="card section2-cards">
+            <h4 class="card-top-sub-heading">Explore</h4>
+            <div class="row explore-row">
+                <div class="col explore-col">
+                    
+                    <div class="row card-row-dash ">
+                        {% for course in facilitatorSubjects %}
+                        <div class="col-6 col-md-4 col-lg-3 mb-2" style="padding: 0px;">
+                            <a href="#">
+                                <div class="card border-light h-100 card-padding-dash">
+                                    
+                                    <div class="card-body text-light border rounded border-light shadow" style="background-color: rgb(255,255,255);"><img class="card-image mx-auto img-fluid" src="{{ course['logo'] }}" style="padding-top: 20px;" />
+                                        <h6 class="text-center card-heading">{{ course['subject'] }}</h6>
+                                    </div>
+                                    
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% if learnedCourses is not empty %}
+        <section class="second-section main-div">
+            <div class="card section2-cards">
+                <h4 class="card-top-sub-heading">Your learnings</h4>
+                <div class="row explore-row">
+                    <div class="col explore-col">
+                        <div class="row card-heading">
+                            {% for oneCourse in learnedCourses %}
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="card border-light h-100 card-padding-dash">
+                                        <div class="card-body text-light border rounded border-light shadow"><img class="card-image img-fluid mx-auto" src="{{ oneCourse['logo'] }}" />
+                                            <h6 class="text-center card-heading">{{ oneCourse['subject'] }}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block bodyBottomInclusions %}
+
+{% endblock %}
+
+
