@@ -1,0 +1,144 @@
+{% extends 'FacilitatorBase.html' %}
+
+{% block head %}
+<link href="../../css/CourseConfiguration.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="setup-card-1" style="padding: 0px;">
+    <section class="main-div">
+        <div>
+            <div class="row">
+                <div class="col explore-col">
+                    <h4 class="text-left card-top-heading">
+                        <i class="fas fa-cogs"></i>
+                         Event Notifications
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if subjectList is not empty %}
+    <section class="main-div">
+        <div class="row explore-row">
+            <div class="col-sm-6 col-md-4 zero-padding mb-2">
+                <label for="subjectList">Subject</label>
+                <select class="custom-select custom-select-sm general-select-in-body" id="subjectList">
+
+                    {% for subject in subjectList %}
+                    <option value="{{ subject['subject_id'] }}">{{ subject['subject'] }} {{ " v" }} {{ subject['version'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-4" >
+                <label for="programList">Program</label>
+                <select class="form-control-sm general-select-in-body select-border" id="programList" onChange="selectedProgram()">
+                    <option value="" selected>Programs </option>
+                    {% if firstSubjectProgramList is not empty %}
+                    {% for program in firstSubjectProgramList %}
+                    <option value="{{ program['course_id'] }}" >{{ program['course_name'] }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="second-section main-div d-none" id="upload-section">
+        <label for="upload-section-card" class="card-top-sub-heading">Add New</label>
+        <div class="card section2-cards" id="upload-section-card">
+
+            <div class="row no-gutters mt-4">
+                <div class="col-sm-4 col-md-3 px-1">
+                    <label for="notification">Choose Type</label>
+
+                    <select class="form-control-sm general-select-in-body select-border" id="notification" onchange="selectedNotificationService()">
+                        <option value="0" >Select Notification Service</option>
+                        {% for notification in supportedNotifications %}
+                        <option value="{{ notification['id'] }}" >{{ notification['notification_service'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div id="new-notification-service-inputs">
+
+                <div class="row no-gutters mt-4">
+                    <div class="col px-1">
+                        <label for="subject">Subject</label>
+                        <input type="text" class="form-control" id="subject" maxlength="120">
+
+                    </div>
+                </div>
+                <div class="row no-gutters mt-4">
+                    <div class="col px-1">
+
+                        <label for="template-editor">Template</label>
+                        <textarea id="template-editor" rows="10" style="width: 100%;"></textarea>
+                    </div>
+                </div>
+                <div id="insert-variable-row" class="row no-gutters">
+                    <div class="col col-md-10 upload-new px-1" id = "inser-variable-col">
+                        <button class="btn btn-secondary" type="button" title ="Click to insert a supported variable" onClick="openInsertVariableModal()">
+                            <i class="fas fa-file-import"></i><span> Insert Variable</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right button-div mt-4">
+                    <div class="row no-gutters">
+                        <div class="col">
+                            <button class="btn btn-primary text-right border rounded" type="submit" style="background-color: #d76f5f;" id="resource-submit-btn" onclick="submitNewNotificationConfiguration()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="insert-variable-modal" tabindex="-1" role="dialog" aria-labelledby="insert-variable-modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="insert-variable-modal-label">Insert a Variable</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="insert-variable-modal-body">
+                    <div class="row no-gutters mt-2">
+                        <div class="col-sm-6 px-1">
+                            <label for="variable">Choose a Variable</label>
+                            <select class="form-control-sm general-select-in-body select-border" id="variable" onchange="selectedVariable()">
+
+                            </select>
+                        </div>
+                    </div>
+                    <div id="variable-details">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="insert-variable-modal-btn" class="btn btn-primary" style="background-color: #d76f5f;" onclick="insertVariable()">Insert</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+    <section class="second-section main-div d-none" id="main-content-section" >
+        <label for="mainContentSection" class="card-top-sub-heading">Configured Notifications</label>
+        <div id = "mainContentSection"></div>
+    </section>
+</div>
+
+
+{% endblock %}
+
+{% block bodyBottomInclusions %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="../../js/facilitatorUtils.js"></script>
+<script src="../../js/eventNotificationConfiguration.js"></script>
+{% endblock %}
