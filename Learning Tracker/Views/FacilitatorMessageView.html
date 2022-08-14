@@ -1,0 +1,116 @@
+{% extends "FacilitatorBaseNew.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="../../css/MessageDisplay.css" />
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="../../css/GenericStyles.css" />
+{% endblock %}
+
+{% block body %}
+<script>
+    var today = new Date();
+    var s3Details4fileUpload = JSON.parse('{{ s3_details_4_attachment_upload | json_encode() | raw}}');
+    var attachmentFilePrefix = JSON.parse('{{ attachment_file_prefix | json_encode() | raw}}');
+    var attachedFiles = [];
+</script>
+
+<div class="message-display-1 ">
+    <div class="row no-gutters  message-grey mt-4 mb-2 back-button-div ">
+        <div class="col-12 col-sm-1  message-padding align-items-center  " title = "Back to Messages">
+            <a id = "back" href="/Message/new" >
+                <i class="fas fa-arrow-left fa-lg"></i>
+            </a>
+        </div>
+        <div class="col-10 col-sm-10   ">
+            <div class="row message-subject  message-black">
+                {{subject}}
+            </div>
+            <div class="row message-participant">
+            {% for participant in participants %}
+            {% if loop.first %}
+              <div>  {{ participant['participant']}}  </div>
+            {% else  %}
+              <div> , &nbsp {{ participant['participant']}}   </div>
+            {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-2 col-sm-1 align-text-right reply-button" title = "Reply" onclick="replyMessage()" <br><i class="fa fa-reply  fa-2x"></i></div>
+    </div>
+    <div class="reply d-none" id="contract" >
+        <div id="editor-container"  class="form-controls white-background"></div>
+        <div class="spacer">
+            <button class="btn  form-close" onclick="collapseReply()" type="button"><i class="far fa-trash-alt"></i> Discard</button>
+            <button class="btn form-submit reply-message"type="submit" value="Submit" onclick="sendReply()" ><i class="far fa-paper-plane"> Send</i></button>
+        </div>
+        <div id="message-attachments">
+          <ul id="uploaded-file-list">
+          </ul>
+        </div>
+        <div id="upload-new-attachment" class="row no-gutters">
+              <div class="col col-md-10 upload-new mt-1 " >
+                  <button class="btn  border rounded border-light lightgray-button" type="button" title ="Click to attach files" onclick="initiateFileUploadModal(s3Details4fileUpload, attachmentFilePrefix, attachmentUploadComplete)">
+                      <i class="fa fa-paperclip"></i>
+                      <span id=""> Attachments</span>
+                  </button>
+              </div>
+        </div>
+    </div>
+    {% for message_detail in message_details %}
+
+    <div id="message-id" message_id ={{ message_detail['message_id'] }} > </div>
+
+      {% if user_id is same as message_detail['sender_user_id'] %}
+      <div id ="sender-message" class=" message-participant " >
+        {% endif %}
+      {% if user_id != message_detail['sender_user_id'] %}
+      <div id ="other-message" class=" message-participant "   >
+        {% endif %}
+
+            <div class="px-3 " >
+                <div class="row message-grey ">
+                    {% if user_id != message_detail['sender_user_id'] %}
+                    <div class="col-md-6 col-lg-6 pic-div sender-name" >
+                        <div class="align-text-left" ><img src="{{message_detail['profile_pic_binary'] }}" width="40" alt="" class="img-fluid rounded-circle">
+                            &nbsp {{ " " }}{{ " " }} {{ message_detail['sender'] }}
+                        </div>
+                    </div>
+                    <div id = "" class="col-md-6 col-lg-6   align-text-right">{{ message_detail['sent_time'] }}</div>
+                    {% endif %}
+
+                    {% if user_id is same as message_detail['sender_user_id'] %}
+                    <div id = "" class="col-md-6 col-lg-6  align-text-left">{{ message_detail['sent_time'] }}</div>
+                    <div class="col-md-6 col-lg-6 pic-div " >
+                        <div class=" align-text-right  "> {{ message_detail['sender'] }}{{ " " }}{{ " " }} &nbsp
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-xs-12  messages-body-facilitator align-middle ">{{ message_detail['message_body'] | raw }}</div>
+                </div>
+                {% if (message_detail['attachments']) != NULL %}
+                <div class = "">
+                      {% for attachment in message_detail['attachments'] %}
+                      <a class="attachments" href = "{{ attachment['file_path'] }} ">{{ attachment['file_name'] }}  </a>  &nbsp  &nbsp
+                      {% endfor %}
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endblock %}
+
+    {% block bodyBottomInclusions %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.js"></script>
+    <script type="text/javascript" src="../../js/richText.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+    <script src="../../js/genericFileUploadV2.js"></script>
+
+    {% endblock %}

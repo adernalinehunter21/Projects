@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Message Notifications{% endblock %}
+
+{% block body %}
+
+
+<div class="container nice-font">
+    <div class="row">
+        <div class="col-md-10 offset-md-10">
+            <div class="button-compose mb-1">
+                <button class="btn btn-dasa  border rounded"  type="submit"  style="color:#ffffff" onclick=" LearnerComposeSection()">Compose New &nbsp;  <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+            </div>
+        </div>
+    </div>
+    <div id="session-container" class="mb-5">
+
+        {% set background = 'session-item-light' %}
+
+        {% for message_detail in message_details %}
+
+
+
+          {% if message_detail.read_status is null and message_detail.sender_user_id != Superglobal_session['user_id'] %}
+        <div class="row no-gutters d-xl-flex align-items-xl-center message-heading bold-font collapsed-session {{ background }}" id="message-heading-{{ message_detail.thread_id }}" onclick="facilitatormessageHeadingRowClicked({{ message_detail.thread_id }})" >
+          {% else %}
+          <div class="row no-gutters d-xl-flex align-items-xl-center message-heading collapsed-session {{ background }}" id="message-heading-{{ message_detail.thread_id }}" onclick="facilitatormessageHeadingRowClicked({{ message_detail.thread_id }},{{ message_detail.message_id }})" >
+            {% endif %}
+           
+
+            {% set name_count = 0 %}
+            {% set names_in_thread = "" %}
+            {% set names_in_tooltip = "" %}
+            {% for participant in  message_detail['participants'] %}
+
+            
+                {% if name_count == 0 %}
+
+                    {% set names_in_thread = participant['participant'] %}
+                    {% set names_in_tooltip = participant['participant'] %}
+         
+                {% elseif name_count < 3 %}
+
+                    {% set names_in_thread = names_in_thread ~ ', ' ~ participant['participant']  %}
+                    {% set names_in_tooltip = names_in_tooltip ~ ', ' ~ participant['participant']  %}
+                {% else %}
+                    {% set names_in_tooltip = names_in_tooltip ~ ', ' ~ participant['participant']  %}
+
+                {% endif %}
+                {% set name_count = name_count + 1 %}
+            {% endfor %}
+
+
+            {% if message_detail.sender_profile_pic is empty %}
+            <div class="col-2 col-sm-2 col-md-1" >
+                <div class="circle">
+                    <img src="../../images/avatar.jpg" alt="" class="img-fluid rounded-circle" data-html = "true" title={{ message_detail['sender_name'] }}>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-2 col-sm-2 col-md-1">
+                <div class="circle ">
+                    <img src="{{message_detail.sender_profile_pic }}"  alt="" class="img-fluid rounded-circle" data-html = "true" 
+                    title={{ message_detail['sender_name'] }}> 
+                  </div>
+            </div>
+            {% endif %}
+            
+            <div class="col-md-4 d-none d-sm-block">
+                <div title=" {{ names_in_tooltip }} "> {{ names_in_thread }}
+                  <span class="count"> {{ message_detail['message_count'] }}</span></div>
+                 
+            </div>
+        
+            <div class=" col-8 col-sm-8 col-md-6">
+                <div class=" row no-gutters ">
+                    {{ message_detail['subject'] }}
+                </div>
+                {% if ((message_detail['attachments']) != NULL)  %}
+            <div class = "row no-gutters">
+                  {% for attachment in message_detail['attachments']|slice(0, 4) %}
+                  <a class = "attachments " href = "{{ attachment['file_path'] }} ">
+                  {{ attachment['file_name'] }}  </a>  &nbsp  &nbsp
+                  {% endfor %}
+                </div>
+
+            {% endif %}
+            </div>
+            <div class="col-2 col-sm-2 col-md-1" >
+                <div>{{ message_detail['sent_time'] }}</div>
+            </div>
+          
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

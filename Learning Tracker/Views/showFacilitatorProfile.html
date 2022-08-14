@@ -1,0 +1,43 @@
+{% extends "FacilitatorBase.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+<div class="setup-card-1 text-center" style="padding: 0px;">
+    <div class="card p-5">
+        <div class="card-body dl-horizontal">
+
+        <!--    <div class=" d-flex">
+                <a href="/profile/edit" class="ml-auto"><i class="far fa-edit" style="color: rgb(95, 199, 215);"></i>Edit</a>   
+            </div>  -->
+
+
+            <div class="image-upload">
+                <img src="{{ Superglobal_session.profile_pic_binary }}" width="150" id="image" class = "img-fluid rounded-circle mb-4" >   
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="text-align: left;">
+                    <strong>Name: </strong>{{ user.name }}
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4" style="text-align: left;">
+                    <strong>Email: </strong>{{ user.email }}
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4" style="text-align: left;">
+                    <strong>Timezone: </strong>{{ Superglobal_session.user_timezone_configured }}
+                </div>
+            </div>
+
+            {% if user.profile != "<p><br></p>" %}
+            <div class="row">
+                <div class="col" style="text-align: left;">
+                    <strong>Profile: </strong>{{ user.profile | raw }}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

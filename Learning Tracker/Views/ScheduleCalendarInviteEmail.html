@@ -1,0 +1,28 @@
+<p>Dear {{ name }}</p>
+<br>
+<p>Please find the session schedule to your {{ calendar }} calendar listed below</p>
+<p>This invitation has been generated assuming your timezone being {{ timezone }}. In case if it is incorrect, we request you to kindly </p>
+<ul>
+    <li>Ignore/Delete this email</li>
+    <li>Login to <a href='{{ appLink }}'>Learning Tracker Application</a> with your credentials</li>
+    <li>View your profile and choose to edit</li>
+    <li>Choose your correct timezone and save the profile</li>
+    <li>Go to Schedule tab</li>
+    <li>Choose your Calendar in the <b>Add to Calendar</b> drop down to receive email like this</li>
+</ul>
+<table style=" border: 1px solid gray; border-collapse: collapse; padding: 5px;">
+    <tr>
+        <th style='background-color: #01435c; color: white; text-align: left; border: 1px solid gray; border-collapse: collapse; padding: 5px;'>No.</th>
+        <th style='background-color: #01435c; color: white; text-align: left; border: 1px solid gray; border-collapse: collapse; padding: 5px;'>Session</th>
+        <th style='background-color: #01435c; color: white; text-align: left; border: 1px solid gray; border-collapse: collapse; padding: 5px;'>Add</th>
+    </tr>
+    {% for session in sessions %}
+    <tr>
+        <td style=' border: 1px solid gray; border-collapse: collapse; padding: 5px;'>{{ session['index'] }}</td>
+        <td style=' border: 1px solid gray; border-collapse: collapse; padding: 5px;'>{{ session['name'] }}</td>
+        <td style=' border: 1px solid gray; border-collapse: collapse; padding: 5px;'><a href="{{ session['link'] }}"><img src="https://dasa-learning-tracker-files.s3-ap-southeast-1.amazonaws.com/appAssets/calendar-icon.png" alt="Add" width="20" title="Click to Add to calendar"></a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p>In case of any technical issues, please raise support request in the application</p>
+<p>Thanks & Regards<br>Tech Team<br>Yayati</p>

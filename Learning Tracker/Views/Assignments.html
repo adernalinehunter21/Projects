@@ -1,0 +1,315 @@
+{% extends 'newLearnerBase.html' %}
+
+{% block pagehead %}
+<link rel="stylesheet" href="../../css/MessageDisplay.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+<link rel="stylesheet" href="../../css/fileUpload.css">
+<link rel="stylesheet" href="../../css/GenericStyles.css">
+<link rel="stylesheet" href="../../css/presentations.css">
+<link rel="stylesheet" href="../../css/assignmentSubmissions1.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+
+
+{% endblock %}
+
+{% block section %}
+
+
+<script>
+    var today = new Date();
+    var s3_details_4fileUpload = JSON.parse('{{ s3_details_4_attachment_upload | json_encode() | raw}}');
+    var attachment_File_Prefix = JSON.parse('{{ attachment_file_prefix | json_encode() | raw}}');
+    var team_members = JSON.parse('{{ team_members | json_encode() | raw}}');
+    var user_id = JSON.parse('{{ user_id | json_encode() | raw}}');
+</script>
+
+<div class="setup-card-1 maincontent" style="padding: 0px;">
+    <section class="main-div">
+        <h4 class="card-top-heading">Assignments</h4>
+
+        <!-- Entire_Subject -->
+
+    {% if moduleAndSubjectAssignments is not empty %}
+
+        <div class="session-card-heading">
+            Program
+        </div>
+
+
+        <div id=" sessionCardDivId " class="card session-card zero-padding">
+
+            <div class="row no-gutters resource-content-row">
+                {% for assignment in moduleAndSubjectAssignments %}
+                <div class="col-sm-12 col-md-6 col-lg-6 text-left">
+                    <div class="card Asssignment-card box-shadow">
+                        <div class="card-header">
+                            <div class="row no gutters">
+                                <div class="col">
+                                    <div class="card-title">{{ assignment['name'] }}</div>
+                                </div>
+
+                                <div class="col col-1" id="submission-status-icon-{{ assignment['id'] }}">
+                                    {% if assignment['submission_status']=="submitted" %}
+                                        {% if assignment['submission_details']['submission_type'] == "INDIVIDUAL" %}
+                                            <i class="far fa-user assignment-upload-status-icon" data-toggle="tooltip" title="Submitted as an individual"></i>
+                                        {% elseif assignment['submission_details']['submission_type'] == "TEAM" %}
+                                            {% set tooltip = "In collaboration with" %}
+                                            {% for name in assignment['submission_details']['other_team_members'] %}
+                                                {% set tooltip = tooltip ~ "\n" ~ name['name'] %}
+                                            {% endfor %}
+                                                <i class="fas fa-users assignment-upload-status-icon" data-toggle="tooltip" title="{{ tooltip }}"></i>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {% if assignment['submission_status']=="not_submitted" %}
+                                        <div class="card-title to_be_submitted assignment_status">
+                                            To be submitted
+                                        </div>
+                                    {% endif %}
+                                    {% if assignment['submission_status']=="submitted" %}
+                                        {% if assignment['submissionStatus']=="SUBMITTED" %}
+                                            <div class="card-title submitted assignment_status">
+                                                Submitted
+                                            </div>
+                                        {% elseif assignment['submissionStatus']=="RECOMMENDED_RESUBMISSION" %}
+                                            <div class="card-title suggested_resubmission assignment_status">
+                                                Recommended Resubmission
+                                            </div>
+                                        {% elseif assignment['submissionStatus']=="ACCEPTED" %}
+                                            <div class="card-title accepted assignment_status">
+                                                Submission Accepted
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body card-text assignment-description">
+                            {{ assignment['description'] | raw }}
+                        </div>
+                        <div class="card-footer">
+                            {% set assignment_id = assignment['id'] %}
+                            {% set submissionStatus = assignment['submissionStatus'] %}
+                            {% set submission_id = assignment['submission_id'] %}
+                            {% set reference_documents = assignment['reference_documents'] %}
+                            {% set assignmentType = assignment['assignmentType'] %}
+                            {% set reference_document_count = reference_documents | length %}
+
+                            <div class="row">
+                                {% if reference_document_count > 0 %}
+                                <div class="col assignment-references" >
+                                    <div class="card-footer-title text-left">Reference Documents</div>
+                                    {% for reference_document in reference_documents %}
+                                    <div class="file-name" ><i class="far fa-file mr-1"></i>
+                                        <a role="presentation" href="{{ reference_document['document_link'] }}" target="blank">{{ reference_document['document_name'] }}</a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+
+                                {% if assignmentType == 'COURSE_SESSION_ASSIGNMENT' %}
+                                    <div class="col">
+                                        {% if assignment['submission_status']=="not_submitted" %}
+                                            <button class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2" assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                <i class="fas fa-upload"></i><div class="button-label">Upload </div>
+                                            </button>
+                                        {% endif %}
+                                        {% if assignment['submission_status']=="submitted" %}
+                                            <div class="card-footer-title text-left" assignmentId="{{ assignment_id }}">Submitted Documents</div>
+                                        {% set uploadedDocuments = assignment['submission_details']['uploaded_documents'] %}
+                                        {% set oneDocumentDetails = uploadedDocuments[0] %}
+                                            <a class="uploaded-assignment-download" role="presentation" href="#" >
+                                                <div class="Submitted-Documents">
+                                                    <i class="fas fa-download submitted-assignment-download-icon" onclick="startDownload('{{ oneDocumentDetails['url'] }}')" data-toggle="tooltip" title="click to download the uploaded file"></i>
+                                                    <span>{{ oneDocumentDetails['name'] }}</span>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% elseif assignmentType == 'SUBJECT_ASSIGNMENT' %}
+
+                                    <div class="col" id = "button-div-{{ assignment_id }}">
+                                        {% if assignment['submission_status']=="not_submitted" %}
+                                            <button id="submitButton{{ assignment_id }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2" assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="createSubmissionModal({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                <i class="fas fa-upload"></i><div id="submit{{ assignment_id }}" class="button-label" title="Click to submit">Submit </div>
+                                            </button>
+
+                                        {% elseif assignment['submission_status']=="submitted" %}
+
+                                        {% if submissionStatus != "ACCEPTED" %}
+                                            <button id="submitButton{{ assignment_id }}" submission_id="{{ submission_id }}" submissionStatus="{{ submissionStatus }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2 " assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="resubmission({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                <i class="fas fa-check"></i><div id="submit{{ assignment_id }}" class="button-label" title="Click to resubmit">View and Resubmit </div>
+                                            </button>
+                                        {% elseif submissionStatus == "ACCEPTED" %}
+                                            <button id="submitButton{{ assignment_id }}" submission_id="{{ submission_id }}" submissionStatus="{{ submissionStatus }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2 " assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="resubmission({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                <i class="fas fa-check"></i><div id="submit{{ assignment_id }}" class="button-label" title="Accepted, Click to View">View</div>
+                                            </button>
+                                        {% endif %}
+
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                {% endfor %}
+            </div>
+
+        </div>
+        {% endif %}
+
+
+
+        {% for session in sessionWiseAssignments %}
+
+        {% if session['assignments'] is not empty %}
+
+        <div class="session-card-heading">
+            Session {{session['session_index']}} : {{ session['session_name'] }}
+        </div>
+
+
+        <div id=" sessionCardDivId " class="card session-card zero-padding">
+
+            <div class="row no-gutters resource-content-row">
+                {% for assignment in session['assignments'] %}
+                <div class="col-sm-12 col-md-6 col-lg-6 text-left">
+                    <div class="card Asssignment-card box-shadow">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-title">{{ assignment['name'] }}</p>
+                                </div>
+                                <div class="col col-1" id="submission-status-icon-{{ assignment['id'] }}">
+                                    {% if assignment['submission_status']=="submitted" %}
+                                        {% if assignment['submission_details']['submission_type'] == "INDIVIDUAL" %}
+                                            <i class="far fa-user assignment-upload-status-icon" data-toggle="tooltip" title="Submitted as an individual"></i>
+                                        {% elseif assignment['submission_details']['submission_type'] == "TEAM" %}
+                                            {% set tooltip = "In collaboration with" %}
+                                            {% for name in assignment['submission_details']['other_team_members'] %}
+                                                {% set tooltip = tooltip ~ "\n" ~ name['name'] %}
+                                            {% endfor %}
+                                                <i class="fas fa-users assignment-upload-status-icon" data-toggle="tooltip" title="{{ tooltip }}"></i>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body card-text assignment-description">
+                            {{ assignment['description'] | raw }}
+                        </div>
+                        <div class="card-footer">
+                            {% set assignment_id = assignment['id'] %}
+                            {% set submissionStatus = assignment['submissionStatus'] %}
+                            {% set submission_id = assignment['submission_id'] %}
+                            {% set reference_documents = assignment['reference_documents'] %}
+                            {% set assignmentType = assignment['assignmentType'] %}
+                            {% set reference_document_count = reference_documents | length %}
+
+                            <div class="row">
+                                {% if reference_document_count > 0 %}
+                                <div class="col assignment-references" >
+                                    <div class="card-footer-title text-left">Reference Documents</div>
+                                    {% for reference_document in reference_documents %}
+                                    <div class="file-name" ><i class="far fa-file mr-1"></i>
+                                        <a role="presentation" id= "{{ assignment_id }}" href="{{ reference_document['document_link'] }}" target="blank">{{ reference_document['document_name'] }}</a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                {% if assignmentType == 'COURSE_SESSION_ASSIGNMENT' %}
+                                    <div class="col">
+                                        {% if assignment['submission_status']=="not_submitted" %}
+                                            <button class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2" assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" data-toggle="modal" data-target="#" type="submit" disabled>
+                                                <i class="fas fa-upload"></i><div class="button-label">Upload </div>
+                                            </button>
+                                        {% endif %}
+                                        {% if assignment['submission_status']=="submitted" %}
+                                            <div class="card-footer-title text-left">Submitted Documents</div>
+                                        {% set uploadedDocuments = assignment['submission_details']['uploaded_documents'] %}
+                                        {% set oneDocumentDetails = uploadedDocuments[0] %}
+                                            <a class="uploaded-assignment-download" role="presentation" href="#" >
+                                                <div class="Submitted-Documents">
+                                                    <i class="fas fa-download submitted-assignment-download-icon" onclick="startDownload('{{ oneDocumentDetails['url'] }}')" data-toggle="tooltip" title="click to download the uploaded file"></i>
+                                                    <span>{{ oneDocumentDetails['name'] }}</span>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                {% elseif assignmentType == 'SUBJECT_ASSIGNMENT' %}
+
+                                    <div class="col" id = "button-div-{{ assignment_id }}">
+                                        {% if assignment['submission_status']=="not_submitted" %}
+                                            <button id="submitButton{{ assignment_id }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2" assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="createSubmissionModal({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                <i class="fas fa-upload"></i><div id="submit{{ assignment_id }}" class="button-label" title="Click to submit">Submit </div>
+                                            </button>
+
+                                        {% elseif assignment['submission_status']=="submitted" %}
+
+                                            {% if submissionStatus != "ACCEPTED" %}
+                                                <button id="submitButton{{ assignment_id }}" submission_id="{{ submission_id }}" submissionStatus="{{ submissionStatus }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2 " assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="resubmission({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                    <i class="fas fa-check"></i><div id="submit{{ assignment_id }}" class="button-label" title="Click to resubmit">View and Resubmit </div>
+                                                </button>
+                                            {% elseif submissionStatus == "ACCEPTED" %}
+                                                <button id="submitButton{{ assignment_id }}" submission_id="{{ submission_id }}" submissionStatus="{{ submissionStatus }}" class="btn btn-bg-lightgray flat-btn ml-1 assignment-upload-button float-right mt-2 " assignment_type="{{ assignment['assignment_type'] }}" assignmentId="{{ assignment_id }}" internalFileName="{{ assignment['internalFileName'] }}" onclick="resubmission({{ assignment_id }})" data-toggle="modal" data-target="#assignment-file-upload-modal" type="submit">
+                                                    <i class="fas fa-check"></i><div id="submit{{ assignment_id }}" class="button-label" title="Accepted, Click to View">View</div>
+                                                </button>
+                                            {% endif %}
+
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div id="assignment-file-upload-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Submit Assignment</h5>
+                        <button type="button" class="close" data-dismiss="modal" style="float: right" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="submission-modal-body" class="modal-body">
+
+                    </div>
+                    <div id = "submission-modal-footer" class="modal-footer">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block pageBottomInclusions %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+<script src="../../js/assignments5.js"></script>
+<script src="../../js/fileUpload.js"></script>
+<script src="../../js/facilitatorUtils.js"></script>
+<script src="../../js/genericFileUploadV2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "FacilitatorBaseNew.html" %}
+
+
+{% block head %}
+<link rel="stylesheet" href="../../css/FacilitatorMessage.css">
+<link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="../../css/supportRequestModal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+{% endblock %}
+
+{% block title %}Message Notifications{% endblock %}
+
+{% block body %}
+
+<script>
+    var today = new Date();
+    var s3Details4fileUpload = JSON.parse('{{ s3_details_4_attachment_upload | json_encode() | raw}}');
+    var attachmentFilePrefix = JSON.parse('{{ attachment_file_prefix | json_encode() | raw}}'); 
+    var attachedFiles = [];
+</script>
+
+<div class="container-fluid facilcont grey">
+    <div class="row back-button " title = "Back to inbox" >
+        <a id = "back" href="/Message/new" >
+            <i class="fas fa-arrow-left fa-lg grey"></i>
+        </a>
+    </div>
+    <section class="main-div " id="composeNew">
+        <div class="row explore-row">
+            <div class="col-sm-6 col-md-6 ">
+                <label for="subjectList">Subject</label>
+                <select class="custom-select custom-select-sm general-select-in-body " id="subjectList">
+                     <option value="" selected>Subject </option>
+                    {% for subject in subjectList %}
+                    <option value="{{ subject['subject_id'] }}">{{ subject['subject'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+                <label for="programList">Program</label>
+                <select class="form-control-sm general-select-in-body select-border" id="programList" onchange="UserDetailsOfProgram()">
+                    <option value="" selected>Programs </option>
+                    {% if firstSubjectProgramList is not empty %}
+                    {% for program in firstSubjectProgramList %}
+                    <option value="{{ program['course_id'] }}">{{ program['course_name'] }}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+    </section>
+
+
+    <div id ="hiddenSubject" class="ml-5 mr-4 d-none mb-4">
+          <label class="modal-supportRequest mb-2"> <i class="far fa-address-card mr-1"></i>To:</label>
+          <select id="receipient-list" name="receipient"  multiple data-live-search="true" data-none-selected-text="Select receipients" data-dropup-auto="false" >
+          </select>
+
+          <br>
+          <label class="modal-supportRequest mt-2"><i class="far fa-edit "></i> Subject: </label>
+          <input type="text" id="Subject" class ="subject" name="subject" required>
+          <br>
+          <label for="message" class=" mt-2"><i class="far fa-envelope "></i>Message: </label>
+              <div id="editor-container" class="form-controls white-background " style="height: 250px; border-radius:0px;"></div>
+              <div id="message-attachments">
+                <ul id="uploaded-file-list" >
+                </ul>
+              </div>
+
+            <div id="upload-new-attachment" class="row no-gutters">
+                  <div class="col col-md-10 upload-new mt-1 " id = "videoUpload">
+                      <button class="btn  border rounded border-light lightgray-button" type="button" title ="Click to attach files" onclick="initiateFileUploadModal(s3Details4fileUpload, attachmentFilePrefix, attachmentUploadComplete)">
+                          <i class="fa fa-paperclip"></i>
+                          <span id="videoUpload-btn-text"> Attachments</span>
+                      </button>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="mt-1 col-md-11 offset-md-11">
+                    <button class="btn btn-dasa form_submit"  type="submit" value="Submit"  onclick="sendFacilitatorMessage()"  id="ComposeMessage" style="color:#ffffff" >Submit</button>
+              </div>
+            </div>  
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+{% block bodyBottomInclusions %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-file-upload/9.5.7/jquery.fileupload.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.js"></script>
+<script type="text/javascript" src="../../js/facilitatorUtils.js"></script>
+<script type="text/javascript" src="../../js/richText.js"></script>
+<script src="../../js/genericFileUploadV2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/js/bootstrap-select.min.js"></script>
+
+
+{% endblock %}

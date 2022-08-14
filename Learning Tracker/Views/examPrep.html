@@ -1,0 +1,146 @@
+{% extends 'newLearnerBase.html' %}
+
+{% block pagehead %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+<link rel="stylesheet" href="../../css/assignmentSubmissions1.css" />
+{% endblock %}
+
+{% block section %}
+
+
+
+<div class="setup-card-1 maincontent" style="padding: 0px;">
+    <section class="main-div">
+        <h4 class="card-top-heading">Exam Preparations</h4>
+
+        <div class="row no-gutters exam-prep-content-row" id="exam-prep-row" style="border: none;">
+
+                {% for module in moduleWiseDetails %}
+                    {% if module['exam_prep_details'] is not empty %}
+                        <div class="session-card-heading" >
+                            Module {{module['moduleIndex']}} : {{ module['moduleName'] }}
+                        </div>
+
+                        <div id=" sessionCardDivId " class="card session-card zero-padding"  >
+
+                        <div class="row no-gutters resource-content-row " >
+
+                        {% for exam_prep_detail in module['exam_prep_details'] %}
+                            {% set question_details = exam_prep_detail['question_details'] %}
+                            {% set question_number =  question_details['id'] %}
+                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 text-left">
+
+                                    <div class="card Asssignment-card box-shadow" id="examPrepModal" data-toggle="modal" href="#prepModal{{ question_number }}">
+                                        <div class="card-header" style="background-color: #fff;">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5 class="card-title">Question {{ question_number }}</h5>
+                                                </div>
+                                                <div id="examPrepTickMark-{{ question_number }}"></div>
+                                                {% if exam_prep_detail['answer_status'] == "answered" %}
+                                                    <div class="col col-1 on-submission-tickmark" style="margin-top: 5px;">
+                                                        <i id = "check-{{ id }}" class="icon fa fa-check"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="card-body card-text assignment-description">
+                                            {{ question_details['short_description'] | raw }}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+<!-- Line 60-130 is for the modal -->
+
+                                <div role="dialog" tabindex="-1" class="modal fade prepModal" id="prepModal{{ question_number }}">
+                                        <div class="modal-dialog modal-xl" style="min-width: 86%!important; " role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header" >
+                                                    <h4 class="modal-title">Question {{ question_number }}</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span id="closeExamPrepModal" aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body m-3">
+
+                                                    {{ question_details['question_body'] | raw }}
+                                                    {% set options = exam_prep_detail['options'] %}
+                                                    {% for option in options %}
+                                                    {% set option_id =  option['id'] %}
+                                                    <div class="option-heading my-2">
+                                                        <input type="radio" value={{ option_id }} name="exam-prep-option" question-id="{{ question_number }}" class="option-heading"/>
+                                                        {{ option['option_type'] }}
+                                                    </div>
+                                                    {{ option['option_description'] | raw }}
+                                                    {% endfor %}
+
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    {% if exam_prep_detail['answer_status'] == "not answered" %}
+                                                    <button class="btn btn-light" type="button" data-dismiss="modal">Cancel</button>
+                                                    <button class="btn dasa-btn" id = "btnSubmit{{ question_number }}" type="button"  onclick="optionSubmitRequest()" >Submit</button>
+                                                    {% endif %}
+                                                </div>
+                                                {% if exam_prep_detail['answer_status'] == "answered" %}
+                                                {% set answer_details = exam_prep_detail['answer_details'] %}
+                                                <div class="container mb-2">
+                                                    <p>This question has been answered with option <b>{{ answer_details['option_type'] }}</b> and scored <b>{{ answer_details['score'] }}</b></p>
+                                                </div>
+                                                <div class="container">
+                                                    <table class="table table-strriped table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Option</th>
+                                                                <th>Correctnes</th>
+                                                                <th>Score</th>
+                                                                <th>Rationale</th>
+                                                            </tr>
+
+                                                            {% for answer_option in exam_prep_detail['all_answers'] %}
+                                                            <tr>
+                                                                <td>{{ answer_option['option_type'] }}</td>
+                                                                <td>{{ answer_option['correctness'] }}</td>
+                                                                <td>{{ answer_option['score'] }}</td>
+                                                                <td>{{ answer_option['rationale'] }}</td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class = "modal-footer">
+                                                    <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                                                </div>
+                                                {% else %}
+                                                <div class="container mb-2" id="answer-status{{ question_number }}"></div>
+                                                <div class="container">
+                                                    <table class="table table-strriped table-bordered">
+                                                        <tbody id="tdata{{ question_number }}">
+                                                            </tbody>
+                                                    </table>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                        {% endfor %}
+                        </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+    </section>
+</div>
+{% endblock %}
+
+
+{% block pageBottomInclusions %}
+<script type="text/javascript" src="../../js/examPrepUpdateHandler.js"></script>
+{% endblock %}
