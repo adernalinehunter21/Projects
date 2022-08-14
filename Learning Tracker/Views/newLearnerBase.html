@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block head %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <title>Learning Tracker</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+        <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="../../css/Google-styled-login.css">
+        <link rel="stylesheet" href="../../css/login.css">
+        <link rel="stylesheet" href="../../css/Footer-Basic.css" />
+        <link rel="stylesheet" href="../../css/styles.css">
+        <link rel="stylesheet" href="../../css/MyActivities.css">
+        <link rel="stylesheet" href="../../css/MyActivitiesPromotionBoard.css" />
+        <link rel="stylesheet" href="../../css/MyActivitiesGenericStyles.css" />
+        <link rel="stylesheet" href="../../css/MyActivitiesVerticalNavigationBar.css" />
+
+        {% block pagehead %}{% endblock %}
+{% endblock %}
+{% block body %}
+<div class="bodycontent">
+
+    <div class="row mt-1 left-navItem" >
+        <div class="col">
+            <div  class="vertical-nav-dash ">
+                <ul class="vertical-nav-list" style="height: 560px;">
+
+                    <li class="text-left vnav-li">
+                        {% if activeSubTab == "Summary" %}
+                        <a class="vnav-link active navbar-fontsize" href="/MyActivities/summary">
+                            <i class="fas fa-tachometer-alt createIcon"></i> Summary
+                        </a>
+                        {% else %}
+                        <a class="vnav-link navbar-fontsize" href="/MyActivities/summary">
+                            <i class="fas fa-tachometer-alt createIcon"></i> Summary
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="text-left vnav-li">
+                        {% if activeSubTab == "Assignments" %}
+                        <a class="vnav-link active navbar-fontsize" href="/MyActivities/Assignments">
+                            <i class="fas fa-book-reader createIcon"></i> Assignments
+                        </a>
+                        {% else %}
+                        <a class="vnav-link navbar-fontsize" href="/MyActivities/Assignments">
+                            <i class="fas fa-book-reader createIcon"></i> Assignments
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="vnav-li">
+                        {% if activeSubTab == "Reflections" %}
+                        <a id="l2" class="vnav-link active navbar-fontsize" href="/MyActivities/Reflection">
+                            <i class="fas fa-book createIcon"></i> Reflections
+                        </a>
+                        {% else %}
+                        <a id="l2" class="vnav-link navbar-fontsize" href="/MyActivities/Reflection">
+                            <i class="fas fa-book createIcon"></i> Reflections
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="text-left vnav-li">
+                        {% if activeSubTab == "Quiz" %}
+                        <a id="l1" class="vnav-link active navbar-fontsize" href="/MyActivities/Quiz">
+                            <i class="far fa-question-circle createIcon"></i> Quiz
+                        </a>
+                        {% else %}
+                        <a id="l1" class="vnav-link navbar-fontsize" href="/MyActivities/Quiz">
+                            <i class="far fa-question-circle createIcon"></i> Quiz
+                        </a>
+                        {% endif %}
+                    </li>
+
+                    <li class="vnav-li">
+                        {% if activeSubTab == "ExamPrep" %}
+                        <a id="l3" class="vnav-link active navbar-fontsize" href="/MyActivities/examPrep">
+                            <i class="fas fa-user-graduate createIcon"></i> Exam Prep
+                        </a>
+                        {% else %}
+                        <a id="l3" class="vnav-link navbar-fontsize" href="/MyActivities/examPrep">
+                            <i class="fas fa-user-graduate createIcon"></i> Exam Prep
+                        </a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    {% block section %}{% endblock %}
+    <div class="setup-card-2 participantpromo">
+        <div class="row promotion-row">
+            <div class="col-12 Promotion-board">
+                <div class="card border-white border rounded shadow">
+                    <div class="card-body promotion-card-padding">
+                        <img class="advertise-img" src="../../images/og-home.png" />
+                        <p class="promotion-card-para">
+                            <strong></strong><br />
+                        </p>
+                        <p class="promotion-card-link">
+                            <a class="promotion-card-link" href="#">Explore
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+    {% block bodyBottomInclusions %}
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.js"></script>
+        <script type="text/javascript" src="../../js/supportRequestRichText.js"></script>
+        <script type="text/javascript" src="../../js/loginHelper.js"></script>
+        <script type="text/javascript" src="../../js/feedbackForms.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+        {% block pageBottomInclusions %}{% endblock %}
+    {% endblock %}

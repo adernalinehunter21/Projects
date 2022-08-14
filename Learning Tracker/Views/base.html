@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Learning Tracker</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+        <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <link rel="stylesheet" href="../../css/Google-styled-login.css">
+        <link rel="stylesheet" href="../../css/styles.css">
+        <link rel="stylesheet" href="../../css/login.css">
+        <link rel="stylesheet" href="../../css/Footer-Basic.css" />
+        <link rel="stylesheet" href="../../css/supportRequestModal.css">
+        <link rel="stylesheet" href="../../css/MyActivities.css">
+        <link rel="stylesheet" href="../../css/MessageDisplay.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+
+
+        {% block head %}{% endblock %}
+
+    </head>
+
+    <body>
+
+
+        <nav class="navbar navbar-light navbar-expand-md bg-light" id="main-navbar-1">
+            <div class="container-fluid">
+                <button data-toggle="collapse" data-target="#navbarCollapse-1" class="navbar-toggler">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a href="/ExternalLink/contentOrgLogo" target="blank">
+                    <img src="{{ content_org_details['logo_link'] }}" class='top-nav-bar-logo' />
+                </a>
+                {% if course_org_details['id'] != content_org_details['id'] %}
+                <a href="/ExternalLink/courseOrgLogo" target="blank">
+                    <img src="{{ course_org_details['logo_link'] }}" class='top-nav-bar-logo' />
+                </a>
+                {% endif %}
+                <div class="collapse navbar-collapse" id="navbarCollapse-1">
+                    <ul class="nav navbar-nav text-right ml-auto">
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-search fa-2x" data-toggle="tooltip" title="click to search"></i>
+                            </a>
+                        </li>
+
+                        {% if Superglobal_session['unread_messages'] is not empty %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" id ="notifications" href="/Message/new">
+                                <i class="far fa-envelope fa-2x "></i>
+                                {% if Superglobal_session['unread_messages'] > 0 %}
+                                <span class="counter "  >{{ Superglobal_session['unread_messages'] }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% if navbar_links is not empty %}
+                        {% for navbar_link in navbar_links %}
+                        {% if navbar_link['social_media_platform'] == 'SLACK' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/SLACK" target="blank">
+                                <i class="fab fa-slack fa-2x" data-toggle="tooltip" title="click to visit slack channel"></i>
+                            </a>
+                        </li>
+                        {% elseif navbar_link['social_media_platform'] == 'FACEBOOK' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/FACEBOOK" target="blank">
+                                <i class="fab fa-facebook-f fa-2x" data-toggle="tooltip" title="click to visit facebook page"></i>
+                            </a>
+                        </li>
+                        {% elseif navbar_link['social_media_platform'] == 'LINKEDIN' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/LINKEDIN" target="blank">
+                                <i class="fab fa-linkedin-in fa-2x" data-toggle="tooltip" title="click to visit linkedin page"></i>
+                            </a>
+                        </li>
+                        {% elseif navbar_link['social_media_platform'] == 'TWITTER' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/TWITTER" target="blank">
+                                <i class="fab fa-twitter fa-2x" data-toggle="tooltip" title="click to visit twitter page"></i>
+                            </a>
+                        </li>
+                        {% elseif navbar_link['social_media_platform'] == 'INSTAGRAM' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/INSTAGRAM" target="blank">
+                                <i class="fab fa-instagram fa-2x" data-toggle="tooltip" title="click to visit instagram page"></i>
+                            </a>
+                        </li>
+                        {% elseif navbar_link['social_media_platform'] == 'WHITEBOARD' %}
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link" href="/ExternalLink/navbarLink/WHITEBOARD" target="blank">
+                                <i class="fas fa-chalkboard fa-2x" data-toggle="tooltip" title="click to visit White board page"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if Superglobal_session['pending_feedbacks'] is not empty %}
+                        {% set pendingFeedbackCount = Superglobal_session['pending_feedbacks'] | length %}
+                        <li role="presentation" class="nav-item dropdown">
+                            <a data-toggle="notification-dropdown"  class="dropdown-toggle nav-link" aria-expanded="false" href="#">
+                                <span><i class="fas fa-exchange-alt fa-2x"></i></span>
+                            </a>
+                            <span class="badge">{{ pendingFeedbackCount }}</span>
+                            <div role="menu" class="dropdown-menu dropdown-menu-right" id="notification-dropdown">
+                                {% for pending_feedback in Superglobal_session['pending_feedbacks'] %}
+                                <div class="dropdown-item text-left" onclick="feedbackForm({{ pending_feedback['courseFbFormId'] }}, '{{ pending_feedback['fbFormName'] }}');">{{ pending_feedback['fbFormName'] }}</div>
+                                {% endfor %}
+                            </div>
+
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                    <div class="dropdown">
+                        <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle" href="#">
+                            {% if user_details.profile_pic_binary is empty %}
+                            <i class="far fa-user-circle fa-2x"></i>
+                            {% else %}
+                            <img src="{{ user_details.profile_pic_binary }}" width="60" alt="" class="img-fluid rounded-circle">
+                            {% endif %}
+                        </a>
+                        <div role="menu" class="dropdown-menu dropdown-menu-right" id="user-avatar-drop-down">
+                            <a role="presentation" class="dropdown-item text-left" href="/profile/show">{{ user_details.name }}{% if user_details.last_name is not empty %} {{ " " }} {{ user_details.last_name }} {% endif %}</a>
+                            <a role="presentation" class="dropdown-item text-left" href="/profile/show">My Account</a>
+                            <a role="presentation" class="dropdown-item text-left" href="#">Certification Level</a>
+                            <a role="presentation" class="dropdown-item text-left" href="#" data-toggle="modal" data-target="#supportRequestModal">Contact Us </a>
+                            <a role="presentation" class="dropdown-item text-left" href="/logout">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-light navbar-expand-md" id="main-navbar">
+            <div class="container-fluid"><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-2"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-2">
+                    <ul class="nav navbar-nav mx-auto">
+
+                        {% if activeTab == "Home" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/Home/index">Home</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/Home/index">Home</a></li>
+                        {% endif %}
+
+                        {% if activeTab == "MyActivities" %}
+
+                        <div class="dropdown show myActivitiesDrop " id="myActivities">
+                            <a class="dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration: none">My Activities</a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="/MyActivities/Summary">Summary</a>
+                                <a class="dropdown-item" href="/MyActivities/Assignments">Assignment</a>
+                                <a class="dropdown-item" href="/MyActivities/Reflection">Reflection</a>
+                                <a class="dropdown-item" href="/MyActivities/Quiz">Quiz</a>
+                                <a class="dropdown-item" href="/MyActivities/examPrep">Exam Prep</a>
+                            </div>
+                        </div>
+
+                        <li class="nav-item myActivitiesSimple" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/MyActivities/Summary">My Activities</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/MyActivities/Summary">My Activities</a></li>
+                        {% endif %}
+
+                        {% if activeTab == "Schedule" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/Schedule/new">Schedule</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/Schedule/new">Schedule</a></li>
+                        {% endif %}
+
+                        {% if activeTab == "Modules" %}
+                        <li class="nav-item dropdown" role="presentation" id="nav-item-home">
+                            <a class="dropdown-toggle nav-link active " data-toggle="dropdown" aria-expanded="false" href="/Module/details/0">Modules</a>
+
+                            {% else %}
+                        <li class="nav-item dropdown" role="presentation" id="nav-item-home">
+                            <a class="dropdown-toggle nav-link " data-toggle="dropdown" aria-expanded="false" href="/Module/details/0">Modules</a>
+
+                            {% endif %}
+                            <div class="dropdown-menu" role="menu" id="nav-item-home-sub">
+                                {% for module in module_list %}
+                                <a role="presentation" class="dropdown-item text-left pt-4" href="/Module/details/{{ module['module_index'] }}">{{ module['module_name'] }}</a>
+                                {% endfor %}
+                            </div>
+
+                        </li>
+
+                        <!--Resource library dropdown-->
+                        {% if activeTab == "ResourceLibrary" %}
+                        <li class="nav-item dropdown" role="presentation" id="nav-item-home">
+                            <a class="dropdown-toggle nav-link active " data-toggle="dropdown" aria-expanded="false" href="/Resource/library">Resource Library</a>
+                            {% else %}
+                        <li class="nav-item dropdown" role="presentation" id="nav-item-home">
+                            <a class="dropdown-toggle nav-link " data-toggle="dropdown" aria-expanded="false" href="/Resource/library">Resource Library</a>
+                            {% endif %}
+
+                            <div class="dropdown-menu" role="menu" id="nav-item-home-sub">
+                                {% for resourceType in resourceTypeList %}
+                                {% set resource_link = "/Resource/library/"~resourceType['type'] %}
+                                <a role="presentation" class="dropdown-item text-left pt-4"  href = {{ resource_link }}>
+                                    {{ resourceType['type'] }}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </li>
+
+                        {% if activeTab == "Facilitated Group" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/Facilitatedgroup/new">Facilitated Group</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/Facilitatedgroup/new">Facilitated Group</a></li>
+                        {% endif %}
+
+                        {% if activeTab == "Team" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/Team/new">Team</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/Team/new">Team</a></li>
+                        {% endif %}
+                        {% if activeTab == "Community" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/Community/new">Community</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/Community/new">Community</a></li>
+                        {% endif %}
+                        {% if activeTab == "FAQ" %}
+                        <li class="nav-item" role="presentation" id="nav-item-home"><a class="nav-link active "  href="/FAQ/new">FAQ</a></li>
+                        {% else %}
+                        <li class="nav-item" role="presentation"><a class="nav-link"  href="/FAQ/new">FAQ</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="feedbackModal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="feedbackModalTitle">Feedback 1</h4>
+                        <button id="feeddbackModalCloseIcon" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body questions-group p-5" id="feedbackModalBody">
+                        Loading, please wait......
+                    </div>
+                    <div id="feedbackModalFooter" class="modal-footer">
+                        <div id='feedbackModalResult'></div>
+                        <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-dasa form_submit"  type="submit" value="Submit" onclick='feedbackFormSubmission();'  id="feedbackSubmitBtn" style="color:#ffffff" hidden>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" role="dialog" tabindex="-1" id="statusModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="statusModalTitle"></h4>
+                        <button id="statusModalCloseIcon" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body questions-group p-5" id="statusModalBody">
+                    </div>
+                    <div id="statusModalFooter" class="modal-footer">
+                        <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="post" name="SupportRequest" class="form text-left" id="SupportRequest">
+            <div role="dialog" tabindex="-1" class="modal fade" id="supportRequestModal">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><i class= "fas fa-envelope mr-2"></i>New Message</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <label class="modal-supportRequest mt-1"> <i class="far fa-address-card mr-1"></i>To:</label>
+                            <select id="receipient-list" name="receipient">
+                                <option value ='FACILITATOR'>Facilitators</option>
+                                <option value ='OPERATIONAL_SUPPORT'>Operational Support Team</option>
+                            </select>
+                            <br>
+                            <label class="modal-supportRequest"><i class="far fa-edit "></i> Subject: </label>
+                            <input type="text"  id="Subject"  name="subject"  required>
+                            <br>
+                            <label for="message" ><i class= "far fa-envelope "></i>Message: </label>
+                            <div id="message"  class="form-control" style="height: 250px; border-radius:0px;"></div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+                            <button  type="submit" class="btn btn-dasa form_submit"   onclick="composeNew()"  id="submiting" style="color:#ffffff">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        {% for banner_detail in banner_details %}
+        {% set position =  banner_detail['position'] %}
+        {% set button_required =  banner_detail['button_required'] %}
+        {% set button_link =  banner_detail['button_link'] %}
+        {% if banner_detail['min_height'] == 0 %}
+        {% set min_height = 200 %}
+        {% else %}
+        {% set min_height = banner_detail['min_height'] %}
+        {% endif %}
+        {% if position == 'TOP' %}
+        <div class ="top-banner">
+
+            {% if banner_detail['background_position'] is empty %}
+            {% set backgroundStyle = "width:100%; background-size: cover; background-repeat: no-repeat;background-position: center; margin-bottom: 40px;" %}
+            {% elseif banner_detail['background_position'] == "top" or banner_detail['background_position'] == "centre" or banner_detail['background_position'] == "bottom" %}
+            {% set backgroundStyle = "width:100%; background-size: cover; background-repeat: no-repeat; background-position: #{ banner_detail['background_position'] } left; margin-bottom: 40px;" %}
+            {% else %}
+            {% set backgroundStyle = "width:100%; background-size: cover; background-position: #{ banner_detail['background_position'] }; margin-bottom: 40px;" %}
+            {% endif %}
+
+            <div style="background: url('{{ banner_detail.background_image_link }}');  min-height:{{ min_height }}px; {{ backgroundStyle }}"/>
+
+            {% if banner_detail['heading_text_color'] is empty %}
+            {%  set headingTextColor = "white" %}
+            {% else %}
+            {%  set headingTextColor = banner_detail['heading_text_color'] %}
+            {% endif %}
+
+            {% if banner_detail['body_text_color'] is empty %}
+            {%  set bodyTextColor = "white" %}
+            {% else %}
+            {%  set bodyTextColor = banner_detail['body_text_color'] %}
+            {% endif %}
+
+            <div class="row pt-5 pb-5">
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                    <p class="text-left banner-heading mt-5 ml-5" style="color: {{ headingTextColor }}">{{ banner_detail.heading }}</p>
+                    <p class="text-left banner-description ml-5 mb-5" style="color: {{ bodyTextColor }}">{{ banner_detail.body }}</p>
+                </div>
+                {% if button_required == 'NO' %}
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4"></div>
+
+                {% elseif button_required == 'YES' %}
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4"></div>
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8"></div>
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 text-center mb-3">
+
+                    {% if button_link != NULL %}
+                    <button class="btn btn-lg text-center dasa-btn   text-white" type="button">
+                        <a href = "/ExternalLink/topBanner/{{ activeTab }}" target="_blank" style="color: white; text-decoration:none;font-size: 20px; font-weight:400; " >{{ banner_detail.button_text }}</a>
+                    </button>
+                    {% elseif button_link == NULL %}
+                    <button class="btn btn-lg text-center dasa-btn   text-white" type="button">
+                        <a href = "#" style="color: white; text-decoration:none;font-size: 20px; font-weight:400; " >{{ banner_detail.button_text }}</a>
+                    </button>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+
+    {% block body %}{% endblock %}
+
+    {% for banner_detail in banner_details %}
+    {% set position =  banner_detail['position'] %}
+    {% set button_link =  banner_detail['button_link'] %}
+    {% if banner_detail['min_height'] == 0 %}
+    {% set min_height = 200 %}
+    {% else %}
+    {% set min_height = banner_detail['min_height'] %}
+    {% endif %}
+    {% if position == 'BOTTOM' %}
+
+    <div class="bottom-banner myActivitiesBanner">
+        {% if banner_detail['background_position'] is empty %}
+        {% set footerBackgroundStyle = "width:100%; background-size: cover; background-repeat: no-repeat;background-position: center; margin-bottom: 20px;" %}
+        {% elseif banner_detail['background_position'] == "top" or banner_detail['background_position'] == "centre" or banner_detail['background_position'] == "bottom" %}
+        {% set footerBackgroundStyle = "width:100%; background-size: cover; background-repeat: no-repeat; background-position: #{ banner_detail['background_position'] } left; margin-bottom: 20px;" %}
+        {% else %}
+        {% set footerBackgroundStyle = "width:100%; background-size: cover; background-position: #{ banner_detail['background_position'] }; margin-bottom: 20px;" %}
+        {% endif %}
+
+        <div style="background: url('{{ banner_detail.background_image_link }}'); width:100%; min-height:{{ min_height }}px; {{ footerBackgroundStyle }}"/>
+        {% if banner_detail['heading_text_color'] is empty %}
+        {%  set footerHeadingTextColor = "white" %}
+        {% else %}
+        {%  set footerHeadingTextColor = banner_detail['heading_text_color'] %}
+        {% endif %}
+
+        {% if banner_detail['body_text_color'] is empty %}
+        {%  set footerBodyTextColor = "white" %}
+        {% else %}
+        {%  set footerBodyTextColor = banner_detail['body_text_color'] %}
+        {% endif %}
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                <p class="text-left banner-heading mt-5 ml-5" style="color: {{ footerHeadingTextColor }}">{{ banner_detail.heading }}</p>
+                <p class="text-left banner-description ml-5 mb-5" style="color: {{ footerBodyTextColor }}">{{ banner_detail.body }}</p>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4"></div>
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8"></div>
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 text-center mt-5 mb-3">
+
+                {% if button_link != NULL %}
+                <button class="btn btn-lg text-center dasa-btn mx-5 px-5 mb-4 text-white" type="button">
+                    <a href = "/ExternalLink/bottomBanner/{{ activeTab }}" target="_blank" style="color: white; text-decoration:none;font-size: 20px; font-weight:400; " >
+                        {{ banner_detail.button_text }}
+                    </a>
+                </button>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+{% endfor %}
+
+<div class="container footer-basic">
+    <hr />
+    <footer class="footer-items">
+        <div class="row ">
+
+            <div class="col-xs-12 col-sm-12 col-md-8 text-center">
+                <div class="list-inline">
+                    <div class="list-inline-item"><span class="copyright"></span><img src="{{ course_org_details['logo_link'] }}" class='footer-logo'></div>
+                    <div class="list-inline-item"><a href="/ExternalLink/footerTermsOfUse">Terms of Use</a></div>
+                    <div class="list-inline-item list-item-separate"></div>
+                    <div class="list-inline-item"><a href="/ExternalLink/footerPrivacyPolicy">Privacy Policy</a></div>
+                    <div class="list-inline-item list-item-separate"></div>
+                    <span class="copyright">Copyright © {{ "now"|date("Y") }} {{ course_org_details['name'] }}</span>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                <div class="list-inline">
+                    <div class="list-inline-item social-icon-circle">
+                        <a href="/ExternalLink/footerFacebook" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                    <div class="list-inline-item social-icon-circle">
+                        <a href="/ExternalLink/footerLinkedIn" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                    <div class="list-inline-item social-icon-circle">
+                        <a href="/ExternalLink/footerTwitter" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                    <div class="list-inline-item social-icon-circle">
+                        <a href="/ExternalLink/footerInstagram" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </footer>
+</div>
+<div id="file-upload-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="file-upload-modal-label">Upload file</h5>
+                <button type="button" class="close" data-dismiss="modal" style="float: right" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id='upload-btn-div-id' hidden></div>
+                <form  method="POST" enctype="multipart/form-data" id="file-upload-form" class="direct-upload"> <!--action="//dasa-learning-tracker-files.s3-ap-southeast-1.amazonaws.com"-->
+
+                    <!-- We'll specify these variables with PHP -->
+                    <!-- Note: Order of these is Important -->
+                    <input type="hidden" name="key" >
+                    <input type="hidden" name="AWSAccessKeyId"> <!--value="{{ s3_details_4_video_upload['accesskey'] }}"-->
+                    <input type="hidden" name="acl"> <!--value="{{ s3_details_4_video_upload['acl'] }}"-->
+                    <input type="hidden" name="success_action_status" value="201">
+                    <input type="hidden" name="policy"> <!--value="{{ s3_details_4_video_upload['base64Policy'] }}"-->
+                    <input type="hidden" name="signature"> <!--value="{{ s3_details_4_video_upload['signature'] }}"-->
+
+                    <input type="file" name="file" id="file-input"> <!--accept="video/*/"-->
+                    <label for="file-input">Choose a file</label>
+
+                    <!-- Progress Bar to show upload completion percentage -->
+                    <div class="progress" ><div class="bar" ></div></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" id = "btn-close" type="button"  data-dismiss="modal" >
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.js"></script>
+
+<script type="text/javascript" src="../../js/supportRequestRichText.js"></script>
+<script type="text/javascript" src="../../js/loginHelper.js"></script>
+<script type="text/javascript" src="../../js/message3.js"></script>
+<script type="text/javascript" src="../../js/feedbackForms.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+{% block bodyBottomInclusions %}{% endblock %}
+</body>
+</html>
