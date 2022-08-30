@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KotlinCalculatorApp</string>
+    <string name="_7">7</string>
+    <string name="backSpace">⌫</string>
+</resources>
