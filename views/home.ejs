@@ -2,5 +2,9 @@
 <div class="container">
   <h1>Home</h1>
   <p><%=homeContent %></p>
+  <br />
+  <%blogs.forEach(function(blog) {%>
+    <%=console.log(blog)%>
+  <%});%>
 </div>
 <%-include("partials/footer")-%>
