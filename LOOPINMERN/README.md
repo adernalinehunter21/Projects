@@ -1,6 +1,18 @@
 # LoopIN App
-
- The LoopIn App created with the MERN stack. The application is a survey website which can be used to publish huge amounts of survey questions which will allow the organizations to tap into the sentiments of the users.The results of the survey questions are displayed in the form of a PieChart.
+This project “LOOP IN Analytics System” is used to
+gather the responses and analyse the responses of the customers
+on various products and services and the surveys are created. The project is
+designed HTML-REACT JS,CSS,JAVASCRIPT as front end and NODE JS EXPRESS JS MONGO DB as
+backend which works in any browsers. The coding language used
+HTML and JAVASCRIPT. LOOP IN ANALYTICS SYSTEM is used to
+gather and analyse the responses of the users on a particular company's
+products and services which can be used to improve these aspects and
+it is done in a single website. The authenticated users can login and
+create survey questions and can respond to it only once because their
+responses should be unambigous and unique which will be used to analyse
+various company's products and services. The users can see the results of
+these surveys in the form of a piechart. It is an easiest platform for all
+users to analyse about their company's products and services.
 
  
 ## User Stories
