@@ -1,7 +1,8 @@
 # LoopIN App
 
- Build a LoopIn App created with the MERN stack
+ The LoopIn App created with the MERN stack. The application is a survey website which can be used to publish huge amounts of survey questions which will allow the organizations to tap into the sentiments of the users.The results of the survey questions are displayed in the form of a PieChart.
 
+ 
 ## User Stories
 
 * As an authenticated user, I can keep my polls and come back later to access them.
