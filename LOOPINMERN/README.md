@@ -23,6 +23,7 @@ PORT = 4000
 DATABASE = 'mongodb://localhost/<DATABASE_NAME>'
 SECRET = 'ThisIsATemporarySecretKey'
 ```
+These dependencies can be installed using the npm i "dependency-name".
 
 ## Built with
 
