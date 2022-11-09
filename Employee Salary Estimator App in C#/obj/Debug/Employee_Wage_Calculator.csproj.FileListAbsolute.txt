@@ -1,0 +1,34 @@
+D:\work\asp.net C#\Employee_Wage_Calculator-master\bin\Debug\Employee_Wage_Calculator.exe.config
+D:\work\asp.net C#\Employee_Wage_Calculator-master\bin\Debug\Employee_Wage_Calculator.exe
+D:\work\asp.net C#\Employee_Wage_Calculator-master\bin\Debug\Employee_Wage_Calculator.pdb
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.csprojAssemblyReference.cache
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.log_in.resources
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.Properties.Resources.resources
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.Wage.resources
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.csproj.GenerateResource.cache
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.csproj.CoreCompileInputs.cache
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.exe
+D:\work\asp.net C#\Employee_Wage_Calculator-master\obj\Debug\Employee_Wage_Calculator.pdb
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.exe.config
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.exe
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.pdb
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csprojAssemblyReference.cache
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.log_in.resources
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.Properties.Resources.resources
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.Wage.resources
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.GenerateResource.cache
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.exe
+C:\Users\Mark\Desktop\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.pdb
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.exe.config
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.exe
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\bin\Debug\Employee_Wage_Calculator.pdb
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.AssemblyReference.cache
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.SuggestedBindingRedirects.cache
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.log_in.resources
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.Properties.Resources.resources
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.Wage.resources
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.GenerateResource.cache
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.exe
+C:\Users\Nivarthi Vishwas\Downloads\Employee Salary Calculator App in C#\Employee Salary Calculator App in C#\obj\Debug\Employee_Wage_Calculator.pdb
