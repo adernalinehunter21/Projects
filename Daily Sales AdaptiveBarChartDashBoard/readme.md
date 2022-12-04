@@ -3,6 +3,7 @@ the form of a barchart and it provides the client with essential and vital infor
 and the values keep adapting according to the sales made by the company.**
 
 **Technologies Used:**
-XCODE
-SWIFT
-iOS
+**SWIFT**
+**iOS**
+**IDE USED:**
+**XCODE**
