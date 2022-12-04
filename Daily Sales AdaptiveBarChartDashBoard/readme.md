@@ -5,5 +5,6 @@ and the values keep adapting according to the sales made by the company.**
 **Technologies Used:**
 **SWIFT**
 **iOS**
+
 **IDE USED:**
 **XCODE**
