@@ -13,8 +13,8 @@ To Login as Student put inside browser "http://localhost/onlinecourse/"
 Login Details for Student: 10806121/Test@123
 Student Pincode for enroll Course Student: 715948
 ##
-Technologies Used:
-HTML,CSS,JAVASCRIPT,PHP,SQL,BOOTSTRAP
+**Technologies Used:**
+**HTML,CSS,JAVASCRIPT,PHP,MYSQL,SQL,BOOTSTRAP**
 ##
 Installation Steps:
 This directory needs to be downloaded and then the httpd-conf file of Apache server in either XAMPP/MAMP needs to be modified with Document Root and Directory matching this directory.
