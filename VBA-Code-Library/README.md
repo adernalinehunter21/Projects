@@ -1,6 +1,6 @@
 # VBA-Code-Library
 
-The VBA library is a set of methods that I have used to help me work accurately and efficiently.  I incldued the modules so others can use and modify for their own use.
+The VBA library is a set of methods that have been used to help myself work accurately and efficiently.  I included the modules so others can use and modify for their own use.
 
 The Excel file has all the modules and all the references included to be able to use once downloaded.
 
